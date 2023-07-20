@@ -1,13 +1,28 @@
 import pygame
-from pieces_txt import *
-from pieces_img import *
-from consts import *
-from board import *
-from checks import *
+from pieces_txt import black_pieces
+from pieces_txt import white_pieces
+from pieces_txt import black_locations
+from pieces_txt import white_locations
+from pieces_txt import captured_pieces_black
+from pieces_txt import captured_pieces_white
+from consts import counter
+from consts import screen
+from consts import selection
+from consts import winner
+from consts import game_over
+from consts import turn_step
+from consts import valid_moves
+from board import draw_board
+from board import draw_pieces
+from board import draw_check
+from board import draw_captured
+from board import draw_valid
+from board import draw_game_over
+from checks import check_options
 
 pygame.init()
 pygame.display.set_caption('Two-Player Pygame Chess!')
-timer = pygame.time.Clock()
+
 
 def check_valid_moves():
     if turn_step < 2:
@@ -16,12 +31,16 @@ def check_valid_moves():
         options_list = black_options
     valid_options = options_list[selection]
     return valid_options
+
+
 # main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
+
+
 run = True
 while run:
-    timer.tick(fps)
+
     if counter < 30:
         counter += 1
     else:
@@ -34,6 +53,7 @@ while run:
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)
+
     # event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -84,29 +104,15 @@ while run:
                     turn_step = 0
                     selection = 100
                     valid_moves = []
-        if event.type == pygame.KEYDOWN and game_over:
-            if event.key == pygame.K_RETURN:
-                game_over = False
-                winner = ''
-                white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
-                                'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']
-                white_locations = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
-                                   (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1)]
-                black_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
-                                'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']
-                black_locations = [(0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7),
-                                   (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)]
-                captured_pieces_white = []
-                captured_pieces_black = []
-                turn_step = 0
-                selection = 100
-                valid_moves = []
-                black_options = check_options(black_pieces, black_locations, 'black')
-                white_options = check_options(white_pieces, white_locations, 'white')
+        if event.type == pygame.KEYDOWN:
+            if game_over and event.key == pygame.K_KP_ENTER:
+                game_over = False  # Reset game over state when Enter key is pressed
+                pygame.display.flip()
 
     if winner != '':
         game_over = True
         draw_game_over()
 
     pygame.display.flip()
+
 pygame.quit()

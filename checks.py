@@ -1,5 +1,7 @@
-from pieces_txt import *
-from  consts import *
+from pieces_txt import white_locations
+from pieces_txt import black_locations
+
+
 def check_options(pieces, locations, turn):
     moves_list = []
     all_moves_list = []
@@ -26,11 +28,9 @@ def check_options(pieces, locations, turn):
 def check_king(position, color):
     moves_list = []
     if color == 'white':
-        enemies_list = black_locations
         friends_list = white_locations
     else:
         friends_list = black_locations
-        enemies_list = white_locations
     # 8 squares to check for kings, they can go one square any direction
     targets = [(1, 0), (1, 1), (1, -1), (-1, 0), (-1, 1), (-1, -1), (0, 1), (0, -1)]
     for i in range(8):
@@ -153,11 +153,9 @@ def check_pawn(position, color):
 def check_knight(position, color):
     moves_list = []
     if color == 'white':
-        enemies_list = black_locations
         friends_list = white_locations
     else:
         friends_list = black_locations
-        enemies_list = white_locations
     # 8 squares to check for knights, they can go two squares in one direction and one in another
     targets = [(1, 2), (1, -2), (2, 1), (2, -1), (-1, 2), (-1, -2), (-2, 1), (-2, -1)]
     for i in range(8):

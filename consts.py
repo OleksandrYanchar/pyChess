@@ -1,12 +1,13 @@
 import pygame
-from pieces_txt import *
 from checks import check_options
-
+from pieces_txt import black_pieces
+from pieces_txt import white_pieces
+from pieces_txt import black_locations
+from pieces_txt import white_locations
 pygame.font.init()
 
 HEIGHT = 900
 WIDTH = 1000
-fps = 60
 turn_step = 0
 selection = 100
 valid_moves = []

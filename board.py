@@ -1,5 +1,15 @@
-import pygame
-from consts import *
+from consts import screen
+from consts import HEIGHT
+from consts import WIDTH
+from consts import turn_step
+from consts import big_font
+from consts import medium_font
+from consts import font
+from consts import selection
+from consts import black_options
+from consts import white_options
+from consts import counter
+from consts import winner
 from pieces_txt import *
 from pieces_img import *
 
@@ -23,6 +33,7 @@ def draw_board():
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
         screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
 
+
 def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
@@ -43,7 +54,8 @@ def draw_pieces():
             screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))
         if turn_step >= 2:
             if selection == i:
-                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,])
+                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1, ])
+
 
 def draw_valid(moves):
     if turn_step < 2:
